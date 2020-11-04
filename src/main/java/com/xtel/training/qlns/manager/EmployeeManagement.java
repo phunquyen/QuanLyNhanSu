@@ -28,13 +28,13 @@ public class EmployeeManagement {
             }
         }
     }
-
+    public static boolean isCheckCharacter = false;
     public Employee inputInfoEmployee() throws SQLException {
         System.out.print("Nhap ma nhan vien: ");
-        String code = sc.nextLine();
-//        if(EmployeeDao.isExistCode(code) && code.matches("\\d{5}")){
-//            System.out.println("Khong hop le!");
-//        }
+        int code = Integer.parseInt(sc.nextLine());
+        if (10000 <= code && code <= 99999){
+             isCheckCharacter = true;
+        }
         System.out.print("Ten nhan vien: ");
         String name = sc.nextLine();
         System.out.print("Gioi tinh: ");
@@ -54,7 +54,7 @@ public class EmployeeManagement {
         System.out.print("Nhap id nhan vien can sua: ");
         int id = Integer.parseInt(sc.nextLine());
         System.out.print("Ma nhan vien: ");
-        String code = sc.nextLine();
+        int code = Integer.parseInt(sc.nextLine());
         System.out.print("Ten nhan vien: ");
         String name = sc.nextLine();
         System.out.print("Gioi tinh: ");

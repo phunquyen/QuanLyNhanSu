@@ -2,12 +2,12 @@ package com.xtel.training.qlns.entities;
 
 public class Employee {
     private int id;
-    private String code;
+    private int code;
     private String name;
     private int gender;
     private String address;
 
-    public Employee(int id, String code, String name, int gender, String address) {
+    public Employee(int id, int code, String name, int gender, String address) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -23,11 +23,11 @@ public class Employee {
         this.id = id;
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
