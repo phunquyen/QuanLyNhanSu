@@ -18,7 +18,8 @@ public class MainApplication {
             System.out.println("3. Sua nhan vien.");
             System.out.println("4. Xoa nhan vien.");
             System.out.println("5. So luong nhan vien.");
-            System.out.println("6. Bao cao chi tiet nhan vien. ");
+            System.out.println("6. Bao cao chi tiet cham cong nhan vien. ");
+            System.out.println("7. Cham cong. ");
 
             System.out.print("Lua chon: ");
             int option = Integer.parseInt(sc.nextLine());
@@ -41,6 +42,9 @@ public class MainApplication {
                     break;
                 case 6:
                     //todo
+                    break;
+                case 7:
+                    empManagement.insertCheckData();
                     break;
                 default:
                     System.exit(0);

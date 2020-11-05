@@ -1,6 +1,7 @@
 package com.xtel.training.qlns.model;
 
 import com.xtel.training.qlns.entities.Employee;
+import com.xtel.training.qlns.entities.EmployeeCheck;
 import com.xtel.training.qlns.manager.EmployeeManagement;
 
 import java.io.Closeable;
@@ -38,6 +39,24 @@ public class EmployeeDao {
             ps.setString(3, emp.getName());
             ps.setInt(4, emp.getGender());
             ps.setString(5, emp.getAddress());
+            ps.execute();
+        }finally {
+            close(ps);
+            close(connection);
+        }
+    }
+
+    public static void insertCheck(String code) throws SQLException{
+        if((!isExistCode(code))){
+            System.out.println("Khong hop le!");
+            return;
+        };
+        Connection connection = ConnectionFactory.createConnection();
+        PreparedStatement ps = null;
+        try {
+            String sql = "insert into `check`(code_employee) values(?)";
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, code);
             ps.execute();
         }finally {
             close(ps);
