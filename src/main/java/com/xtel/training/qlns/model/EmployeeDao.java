@@ -24,7 +24,7 @@ public class EmployeeDao {
     }
 
     public static void insert(Employee emp) throws SQLException{
-        if((isExistCode(emp.getCode()) || EmployeeManagement.isCheckCharacter)){
+        if((isExistCode(emp.getCode()))){
             System.out.println("Khong hop le!");
             return;
         };
@@ -34,7 +34,7 @@ public class EmployeeDao {
             String sql = "insert into employee(id, code, name, gender, address) values(?,?,?,?,?)";
             ps = connection.prepareStatement(sql);
             ps.setInt(1, emp.getId());
-            ps.setInt(2, emp.getCode());
+            ps.setString(2, emp.getCode());
             ps.setString(3, emp.getName());
             ps.setInt(4, emp.getGender());
             ps.setString(5, emp.getAddress());
@@ -65,7 +65,7 @@ public class EmployeeDao {
         try {
             String sql = "update employee set code = ?, name = ?, gender = ?, address = ? where id = ?";
             ps = connection.prepareStatement(sql);
-            ps.setInt(1, emp.getCode());
+            ps.setString(1, emp.getCode());
             ps.setString(2, emp.getName());
             ps.setInt(3, emp.getGender());
             ps.setString(4, emp.getAddress());
@@ -92,14 +92,14 @@ public class EmployeeDao {
         }
     }
 
-    public static boolean isExistCode(int code) throws SQLException{
+    public static boolean isExistCode(String code) throws SQLException{
         Connection connection = ConnectionFactory.createConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             String sql = "select count(1) c from employee where code = ?";
             ps = connection.prepareStatement(sql);
-            ps.setInt(1, code);
+            ps.setString(1, code);
             rs = ps.executeQuery();
             if(rs.next()) {
                 if(rs.getInt("c" ) > 0){

@@ -1,15 +1,19 @@
 package com.xtel.training.qlns.manager;
 
 import com.xtel.training.qlns.entities.Employee;
+import com.xtel.training.qlns.entities.EmployeeCheck;
 import com.xtel.training.qlns.model.EmployeeDao;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
 public class EmployeeManagement {
     List<Employee> employeeList = new ArrayList<>();
+    List<String> empCheckList = new ArrayList<>();
     Scanner sc = new Scanner(System.in);
 
     public void insertData() throws SQLException {
@@ -28,12 +32,12 @@ public class EmployeeManagement {
             }
         }
     }
-    public static boolean isCheckCharacter = false;
     public Employee inputInfoEmployee() throws SQLException {
         System.out.print("Nhap ma nhan vien: ");
-        int code = Integer.parseInt(sc.nextLine());
-        if (10000 <= code && code <= 99999){
-             isCheckCharacter = true;
+        String code = sc.nextLine();
+        while (!code.matches("\\d{5}")) {
+            System.out.print("Nhap lai ma nhan vien: ");
+            code = sc.nextLine();
         }
         System.out.print("Ten nhan vien: ");
         String name = sc.nextLine();
@@ -42,6 +46,46 @@ public class EmployeeManagement {
         System.out.print("Dia chi: ");
         String address = sc.nextLine();
         return new Employee(0, code, name, gender, address);
+    }
+
+    public String inputEmpCheckIn() throws SQLException {
+        System.out.print("Nhap ngay: ");
+        int day = Integer.parseInt(sc.nextLine());
+        System.out.print("Nhap thang: ");
+        int month = Integer.parseInt(sc.nextLine());
+        System.out.print("Nhap nam: ");
+        int year = Integer.parseInt(sc.nextLine());
+        System.out.print("Nhap gio: ");
+        int hour = Integer.parseInt(sc.nextLine());
+        System.out.print("Nhap phut: ");
+        int minute = Integer.parseInt(sc.nextLine());
+        System.out.print("Nhap giay: ");
+        int second = Integer.parseInt(sc.nextLine());
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        cal.set(year, month, day, hour, minute, second);
+        String dateTime = sdf.format(cal.getTime());
+        return dateTime;
+    }
+
+    public String inputEmpCheckOut() throws SQLException {
+        System.out.print("Nhap ngay: ");
+        int day = Integer.parseInt(sc.nextLine());
+        System.out.print("Nhap thang: ");
+        int month = Integer.parseInt(sc.nextLine());
+        System.out.print("Nhap nam: ");
+        int year = Integer.parseInt(sc.nextLine());
+        System.out.print("Nhap gio: ");
+        int hour = Integer.parseInt(sc.nextLine());
+        System.out.print("Nhap phut: ");
+        int minute = Integer.parseInt(sc.nextLine());
+        System.out.print("Nhap giay: ");
+        int second = Integer.parseInt(sc.nextLine());
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        cal.set(year, month, day, hour, minute, second);
+        String dateTime = sdf.format(cal.getTime());
+        return dateTime;
     }
 
     public void deleteData() throws SQLException {
@@ -54,7 +98,7 @@ public class EmployeeManagement {
         System.out.print("Nhap id nhan vien can sua: ");
         int id = Integer.parseInt(sc.nextLine());
         System.out.print("Ma nhan vien: ");
-        int code = Integer.parseInt(sc.nextLine());
+        String code = sc.nextLine();
         System.out.print("Ten nhan vien: ");
         String name = sc.nextLine();
         System.out.print("Gioi tinh: ");
@@ -64,5 +108,4 @@ public class EmployeeManagement {
         Employee employee = new Employee(id, code, name, gender, address);
         EmployeeDao.update(employee);
     }
-
 }
