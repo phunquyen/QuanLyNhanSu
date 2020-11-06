@@ -48,7 +48,7 @@ public class MainApplication {
                     EmployeeDao.insertCheckIn();
                     break;
                 case 8:
-//                    empManagement.inputEmpCheckOut();
+                    EmployeeDao.insertCheckOut();
                     break;
                 default:
                     System.exit(0);

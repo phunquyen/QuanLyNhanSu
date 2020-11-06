@@ -29,22 +29,6 @@ public class EmployeeManagement {
         }
     }
 
-//    public Employee inputCheckEmployee() throws SQLException {
-//        System.out.print("Nhap ma nhan vien: ");
-//        String code = sc.nextLine();
-//        while (!code.matches("\\d{5}")) {
-//            System.out.print("Nhap lai ma nhan vien: ");
-//            code = sc.nextLine();
-//        }
-//        System.out.print("Ten nhan vien: ");
-//        String name = sc.nextLine();
-//        System.out.print("Gioi tinh: ");
-//        int gender = Integer.parseInt(sc.nextLine());
-//        System.out.print("Dia chi: ");
-//        String address = sc.nextLine();
-//        return new Employee(0, code, name, gender, address);
-//    }
-
     public Employee inputInfoEmployee() throws SQLException {
         System.out.print("Nhap ma nhan vien: ");
         String code = sc.nextLine();
