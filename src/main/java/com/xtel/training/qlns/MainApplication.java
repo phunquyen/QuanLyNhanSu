@@ -11,7 +11,7 @@ public class MainApplication {
     public static void main(String[] args) throws SQLException {
         Scanner sc = new Scanner(System.in);
         EmployeeManagement empManagement = new EmployeeManagement();
-        do{
+        do {
             System.out.println("");
             System.out.println("1. Hien thi thong tin nhan vien. ");
             System.out.println("2. Them nhan vien.");
@@ -19,12 +19,13 @@ public class MainApplication {
             System.out.println("4. Xoa nhan vien.");
             System.out.println("5. So luong nhan vien.");
             System.out.println("6. Bao cao chi tiet cham cong nhan vien. ");
-            System.out.println("7. Cham cong. ");
+            System.out.println("7. Cham cong di. ");
+            System.out.println("8. Cham cong ve. ");
 
             System.out.print("Lua chon: ");
             int option = Integer.parseInt(sc.nextLine());
 
-            switch (option){
+            switch (option) {
                 case 1:
                     EmployeeDao.getList();
                     break;
@@ -41,10 +42,13 @@ public class MainApplication {
                     EmployeeDao.count();
                     break;
                 case 6:
-                    //todo
+                    EmployeeDao.getReport();
                     break;
                 case 7:
-                    empManagement.insertCheckData();
+                    EmployeeDao.insertCheckIn();
+                    break;
+                case 8:
+//                    empManagement.inputEmpCheckOut();
                     break;
                 default:
                     System.exit(0);

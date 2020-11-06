@@ -1,14 +1,17 @@
 package com.xtel.training.qlns.model;
 
 import com.xtel.training.qlns.entities.Employee;
-import com.xtel.training.qlns.entities.EmployeeCheck;
 import com.xtel.training.qlns.manager.EmployeeManagement;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.sql.*;
+import java.util.Scanner;
 
 public class EmployeeDao {
+
+    public static Scanner sc = new Scanner(System.in);
+
     public static void getList() throws SQLException{
         Connection connection = ConnectionFactory.createConnection();
         try {
@@ -18,6 +21,22 @@ public class EmployeeDao {
             while (rs.next()){
                 System.out.println(rs.getInt(1) + " " + rs.getInt(2)
                 + " " + rs.getString(3) + " " + rs.getInt(4) + " " +rs.getString(5));
+            }
+        }finally {
+            close(connection);
+        }
+    }
+
+    public static void getReport() throws SQLException{
+        Connection connection = ConnectionFactory.createConnection();
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "select * from `check`";
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()){
+                System.out.println(rs.getInt(1) + " " + rs.getInt(2)
+                        + " " + rs.getDate(3) + " " + rs.getDate(4)
+                        + " " +rs.getDate(5) + " " + rs.getDate(6));
             }
         }finally {
             close(connection);
@@ -46,18 +65,51 @@ public class EmployeeDao {
         }
     }
 
-    public static void insertCheck(String code) throws SQLException{
-        if((!isExistCode(code))){
-            System.out.println("Khong hop le!");
-            return;
-        };
+    public static void insertCheckIn() throws SQLException{
         Connection connection = ConnectionFactory.createConnection();
         PreparedStatement ps = null;
         try {
-            String sql = "insert into `check`(code_employee) values(?)";
-            ps = connection.prepareStatement(sql);
-            ps.setString(1, code);
-            ps.execute();
+            System.out.print("Nhap ma nhan vien cua ban de check in: ");
+            String code = sc.nextLine();
+
+            if (isExistCode(code)) {
+                java.util.Date date = new java.util.Date();
+
+                java.sql.Timestamp sqlTime = new java.sql.Timestamp(date.getTime());
+                String sql = "insert into `check`(time_checkin, code_employee, date_check) values(?,?,?)";
+                ps = connection.prepareStatement(sql);
+                ps.setTimestamp(1, sqlTime);
+                ps.setString(2, code);
+                ps.setDate(3, new java.sql.Date(date.getTime()));
+                ps.execute();
+            } else {
+                System.out.println("Ma nhan vien khong ton tai !, vui long kiem tra lai");
+            }
+
+        }finally {
+            close(ps);
+            close(connection);
+        }
+    }
+    public static void insertCheckOut() throws SQLException{
+        Connection connection = ConnectionFactory.createConnection();
+        PreparedStatement ps = null;
+        try {
+            System.out.print("Nhap ma nhan vien cua ban de check out: ");
+            String code = sc.nextLine();
+            if (isExistCode(code)) {
+                java.util.Date date = new java.util.Date();
+
+                java.sql.Timestamp sqlTime = new java.sql.Timestamp(date.getTime());
+                String sql = "insert into `check`(time_checkin, code_employee, date_check) values(?,?,?)";
+                ps = connection.prepareStatement(sql);
+                ps.setTimestamp(1, sqlTime);
+                ps.setString(2, code);
+                ps.setDate(3, new java.sql.Date(date.getTime()));
+                ps.execute();
+            } else {
+                System.out.println("Ma nhan vien khong ton tai !, vui long kiem tra lai");
+            }
         }finally {
             close(ps);
             close(connection);
@@ -98,8 +150,8 @@ public class EmployeeDao {
 
     public static void count() throws SQLException{
         Connection connection = ConnectionFactory.createConnection();
-        Statement statement = connection.createStatement();
         try {
+            Statement statement = connection.createStatement();
             String sql = "select count(id) from employee";
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
@@ -140,4 +192,13 @@ public class EmployeeDao {
             e.printStackTrace();
         }
     }
+
+//    public static boolean isNumeric(String str) {
+//        try {
+//            Double.parseDouble(str);
+//            return true;
+//        } catch(NumberFormatException e){
+//            return false;
+//        }
+//    }
 }
